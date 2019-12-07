@@ -1,0 +1,139 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title:  Swagger + Spring boot
+  description: ''
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: User
+    description: 'User related endpoints'
+paths:
+    '/v1/user':
+      post:
+          summary: Create user
+          operationId: saveUserInfo
+          tags:
+          - User
+          produces:
+          - application/json
+          consumes:
+          - application/json
+          parameters:
+          - name: body
+            in: body
+            schema:
+              $ref: '#/definitions/model-user'
+          responses:
+            '200':
+              description: ''
+              schema:
+                $ref: '#/definitions/response-base'
+            '401':
+              $ref: '#/responses/response-unauthorized'
+            '500':
+              $ref: '#/responses/response-internal-server-error-500'
+    '/v1/user/{user-id}':
+      get:
+        summary: Get user information
+        operationId: getUserInfo
+        tags:
+        - User
+        produces:
+        - application/json
+        parameters:
+        - name: user-id
+          in: path
+          type: integer
+          format: int64
+          required: true
+        responses:
+          '200':
+            description: ''
+            schema:
+              $ref: '#/definitions/response-model-user'
+          '401':
+            $ref: '#/responses/response-unauthorized'
+          '500':
+            $ref: '#/responses/response-internal-server-error-500'
+      put:
+        summary: Update avatar
+        operationId: updateUserAvatar
+        tags:
+        - User
+        produces:
+        - application/json
+        consumes:
+        - multipart/form-data
+        parameters:
+        - name: user-id
+          in: path
+          type: string
+          required: true
+        - name: profileImage
+          in: formData
+          type: file
+          required: true
+        responses:
+          '200':
+            description: ''
+            schema:
+              $ref: '#/definitions/response-base'
+          '401':
+            $ref: '#/responses/response-unauthorized'
+          '500':
+            $ref: '#/responses/response-internal-server-error-500'
+definitions:
+    response-base:
+      type: object
+      properties:
+        success:
+          type: boolean
+        resultCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+        transactionId:
+          type: string
+        type:
+          type: string
+      discriminator: type
+      required:
+        - success
+        - resultCode
+    model-user:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        firstname:
+          type: string
+        lastName:
+          type: string
+        avatar:
+          type: string
+    response-model-user:
+      allOf:
+      - $ref: '#/definitions/response-base'
+      - type: object
+        properties:
+          userDetails:
+            $ref: '#/definitions/model-user'
+responses:
+    response-internal-server-error-500:
+      description: Internal Server error
+      schema:
+        $ref: '#/definitions/response-base'
+    response-unauthorized:
+        description: Authentication information is missing or invalid
+        schema:
+          $ref: '#/definitions/response-base' 
+        headers:
+          WWW_Authenticate:
+            type: string
