@@ -32,6 +32,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		
+		<!-- image resize, re-scale and so on -->
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
+		
 		
 	<!-- Required for annotations generated on swagger generated models -->
 		<dependency>
@@ -80,10 +98,7 @@
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
-						<excludes>
-							<exclude>*</exclude>
-						</excludes>
-						<filtering>false</filtering>
+						<filtering>true</filtering>
 					</resource>
 				</resources>
 				<plugins>
@@ -139,8 +154,8 @@
 							<generateModelDocumentation>false</generateModelDocumentation>
 							<generateModelTests>false</generateModelTests>
 							<generateSupportingFiles>true</generateSupportingFiles>
-							<modelPackage>it.aman.ethauthserver.swagger.model</modelPackage>
-							<apiPackage>it.aman.ethauthserver.swagger.api</apiPackage>
+							<modelPackage>dzone.aman.swagger.model</modelPackage>
+							<apiPackage>dzone.aman.swagger.api</apiPackage>
 							<configOptions>
 								<dateLibrary>java8</dateLibrary>
 								<sourceFolder>swagger</sourceFolder>

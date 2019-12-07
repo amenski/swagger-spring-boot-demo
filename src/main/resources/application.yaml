@@ -1,0 +1,15 @@
+spring:
+   profiles:
+      active: dev
+
+   h2:
+      console:
+         enabled: true
+         path: /h2-console
+
+app:
+   profile-image:
+      file-types: jpg, jpeg, png
+      width-height: 300, 300
+      max-size: 5242880
+      upload-dir: C:\\Users\\prg\\Desktop\\rest-api-demo\\documents

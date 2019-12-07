@@ -9,15 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dzone.aman.restapidemo.services.IUserService;
 import dzone.aman.restapidemo.services.impl.UserServiceImpl;
+import dzone.aman.swagger.api.UserApi;
+import dzone.aman.swagger.model.ModelUser;
+import dzone.aman.swagger.model.ResponseBase;
+import dzone.aman.swagger.model.ResponseModelUser;
 import io.swagger.annotations.ApiParam;
-import it.aman.ethauthserver.swagger.api.UserApi;
-import it.aman.ethauthserver.swagger.model.ModelUser;
-import it.aman.ethauthserver.swagger.model.ResponseBase;
-import it.aman.ethauthserver.swagger.model.ResponseModelUser;
 
 @RestController
 public class UserController implements UserApi{
@@ -73,6 +75,30 @@ public class UserController implements UserApi{
 			logger.info("{} {}", methodName, "method end.");
 		}
 		
+		return responseEntity;
+	}
+
+	@Override
+	public ResponseEntity<ResponseBase> updateUserAvatar(
+			@ApiParam(value = "",required=true) @PathVariable("user-id") Long userId,
+			@ApiParam(value = "file detail") @Valid @RequestPart("file") MultipartFile profileImage) 
+	{
+		String methodName = "updateUserAvatar()";
+		ResponseEntity<ResponseBase> responseEntity = null;
+		ResponseBase response = null;
+		try {
+			userService.updateAvatar(userId, profileImage);
+			response = new ResponseBase();
+			response.success(Boolean.TRUE).resultCode(200);
+			responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+		}catch (Exception ex) {
+			logger.error("{} {}", methodName, ex.getMessage());
+			logger.error("{} {}", methodName, ex);
+			response.success(Boolean.FALSE).resultCode(500).addErrorsItem(ex.getMessage());
+			responseEntity = new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} finally {
+			logger.info("{} {}", methodName, "method end.");
+		}
 		return responseEntity;
 	}
 	
