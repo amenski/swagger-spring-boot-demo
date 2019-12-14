@@ -73,7 +73,7 @@ public class UserServiceImpl implements IUserService {
 		try {
 			user = userRepository.findById(userId).orElse(null);
 			if(user == null)
-				throw new RuntimeException();
+				throw new RuntimeException("Invalid input value.");;
 			
 			//filename = [filename + username + date]
 			String filename = FilenameUtils.getBaseName(file.getOriginalFilename());
@@ -102,11 +102,11 @@ public class UserServiceImpl implements IUserService {
 		
 		try{
 			if(userId == null)
-				throw new RuntimeException();
+				throw new RuntimeException("User Not found.");
 			
 			User userInfo = userRepository.findById(userId).orElse(null);
 			if(userInfo == null)
-				throw new RuntimeException();
+				throw new RuntimeException("User Not found.");
 			
 			ModelUser modelUser = new ModelUser();
 			modelUser.userId(userInfo.getId())

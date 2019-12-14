@@ -28,17 +28,17 @@ public class UserController implements UserApi{
 	
 	@Autowired
 	private IUserService userService;
-
+	
+	// PUT - /v1/user
 	@Override
 	public ResponseEntity<ResponseBase> saveUserInfo(@ApiParam(value = ""  )  @Valid @RequestBody ModelUser body) {
 		String methodName = "saveUserInfo()";
 		logger.info("{} {}", methodName, "method start.");
 		
 		ResponseEntity<ResponseBase> responseEntity = null;
-		ResponseBase response = null;
+		ResponseBase response = new ResponseBase();
 		try{
 			userService.saveUserInfo(body);
-			response = new ResponseBase();
 			response.success(Boolean.TRUE).resultCode(200);
 			responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		}catch (Exception ex) {
@@ -53,23 +53,23 @@ public class UserController implements UserApi{
 		return responseEntity;
 	}
 
+	// GET - /v1/user/{user_id}
 	@Override
 	public ResponseEntity<ResponseModelUser> getUserInfo(@ApiParam(value = "",required=true) @PathVariable("user-id") Long userId) {
 		String methodName = "getUserInfo()";
 		logger.info("{} {}", methodName, "method start.");
 		
 		ResponseEntity<ResponseModelUser> responseEntity = null;
-		ResponseModelUser response = null;
+		ResponseModelUser response =  new ResponseModelUser();;
 		try{
 			ModelUser modelUser = userService.getUserInfo(userId);
 			
-			response = new ResponseModelUser();
 			response.userDetails(modelUser).success(Boolean.TRUE).resultCode(200);
 			responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		}catch (Exception ex) {
 			logger.error("{} {}", methodName, ex.getMessage());
 			logger.error("{} {}", methodName, ex);
-			response.success(Boolean.FALSE).resultCode(500).addErrorsItem(ex.getMessage());
+			response.success(Boolean.FALSE).resultCode(500).message(ex.getMessage());
 			responseEntity = new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		} finally {
 			logger.info("{} {}", methodName, "method end.");
@@ -78,6 +78,10 @@ public class UserController implements UserApi{
 		return responseEntity;
 	}
 
+	// POST - /v1/user/{user_id}/updateAvatar
+	/**
+	 * File upload request requires HttpMethod = POST
+	 */
 	@Override
 	public ResponseEntity<ResponseBase> updateUserAvatar(
 			@ApiParam(value = "",required=true) @PathVariable("user-id") Long userId,
@@ -85,10 +89,9 @@ public class UserController implements UserApi{
 	{
 		String methodName = "updateUserAvatar()";
 		ResponseEntity<ResponseBase> responseEntity = null;
-		ResponseBase response = null;
+		ResponseBase response = new ResponseBase();;
 		try {
 			userService.updateAvatar(userId, profileImage);
-			response = new ResponseBase();
 			response.success(Boolean.TRUE).resultCode(200);
 			responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		}catch (Exception ex) {

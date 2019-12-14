@@ -10,7 +10,7 @@ tags:
     description: 'User related endpoints'
 paths:
     '/v1/user':
-      post:
+      put:
           summary: Create user
           operationId: saveUserInfo
           tags:
@@ -56,7 +56,8 @@ paths:
             $ref: '#/responses/response-unauthorized'
           '500':
             $ref: '#/responses/response-internal-server-error-500'
-      put:
+    '/v1/user/{user-id}/updateAvatar':
+      post:
         summary: Update avatar
         operationId: updateUserAvatar
         tags:
