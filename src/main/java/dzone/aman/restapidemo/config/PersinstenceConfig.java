@@ -18,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = { "dzone.aman.restapidemo.repositories" })
+@EnableJpaRepositories(basePackages = { "dzone.aman.restapidemo.dal.repositories" })
 @EnableTransactionManagement
 public class PersinstenceConfig {
 
@@ -26,7 +26,7 @@ public class PersinstenceConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan("dzone.aman.restapidemo.models");
+		em.setPackagesToScan("dzone.aman.restapidemo.dal.models");
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);

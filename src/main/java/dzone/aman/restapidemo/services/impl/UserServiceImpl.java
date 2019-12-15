@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import dzone.aman.restapidemo.models.User;
-import dzone.aman.restapidemo.repositories.UserRepository;
+import dzone.aman.restapidemo.dal.models.User;
+import dzone.aman.restapidemo.dal.repositories.UserRepository;
 import dzone.aman.restapidemo.services.IUserService;
 import dzone.aman.restapidemo.utils.UploadUtils;
 import dzone.aman.swagger.model.ModelUser;

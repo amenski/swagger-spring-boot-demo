@@ -12,4 +12,4 @@ app:
       file-types: jpg, jpeg, png
       width-height: 300, 300
       max-size: 5242880
-      upload-dir: C:\\Users\\prg\\Desktop\\projects\\rest-api-demo\\documents
+      upload-dir: C:\\Users\\prg\\Desktop\\projects\\rest-api-demo\\images
