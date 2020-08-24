@@ -1,6 +1,10 @@
+server:
+   port: 8082
 spring:
    profiles:
       active: dev
+   application:
+      name: rest-api-demo
 
    h2:
       console:
@@ -12,4 +16,23 @@ app:
       file-types: jpg, jpeg, png
       width-height: 300, 300
       max-size: 5242880
-      upload-dir: C:\\Users\\prg\\Desktop\\projects\\rest-api-demo\\images
+      upload-dir: C:\\Users\\Amanuel_SHIFERAW\\Desktop\\proj\\maedot\\tmp\\swagger-spring-boot-demo\\images
+
+# 
+eureka:
+   client:
+      serviceUrl:
+         defaultZone: http://localhost:8761/eureka
+   instance:
+      preferIpAddress: true
+      
+keycloak:
+   configurationFile : 'classpath:keycloak.json'
+   
+#keycloak.policy-enforcer-config.paths[0].methods[1].method=DELETE
+#keycloak.policy-enforcer-config.paths[0].methods[1].scopes[0]=delete
+
+logging:
+   level:
+      org:
+         keycloak: TRACE

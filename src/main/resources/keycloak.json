@@ -1,0 +1,46 @@
+{
+	"realm": "project",
+	"auth-server-url": "http://localhost:8080/auth",
+	"ssl-required": "external",
+	"resource": "project_service",
+	"bearer-only": true,
+	"use-resource-role-mappings": true,
+	"verify-token-audience": true,
+	"enable-cors": true,
+	"cors-max-age": 36000,
+	"cors-allowed-headers": "POST, GET, OPTIONS",
+	"credentials": {
+		"secret": "280f1ecf-0bce-41e1-a3bd-263cdb6f10ad"
+	},
+	"principal-attribute": "preferred_username",
+	"policy-enforcer": {
+		"enforcement-mode": "ENFORCING",
+		"http-method-as-scope": true,
+		"user-managed-access": {
+			
+		},
+		"paths": [
+			{
+				"name": "user_resource",
+				"path": "/v1/user/{id}",
+				"methods": [
+					{
+						"method": "DELETE",
+						"scopes": [
+							"user:delete"
+						]
+					},
+					{
+						"method": "GET",
+						"scopes": [
+							"user:view"
+						]
+					}
+				],
+				"scopes": [
+					"user:view"
+				]
+			}
+		]
+	}
+}
